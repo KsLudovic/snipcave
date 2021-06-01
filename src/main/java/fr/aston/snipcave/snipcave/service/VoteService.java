@@ -32,7 +32,7 @@ public class VoteService {
         return voteRepository.save(vote);
     }
 
-    public Vote finVoteByUserAndPost(User user, Post post) {
+    public Vote findVoteByUserAndPost(User user, Post post) {
         return voteRepository.findByUserAndPost(user,post)
                 .orElseThrow(() -> new VoteNotFoundException("No vote was found "));
     }

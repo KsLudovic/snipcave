@@ -1,5 +1,6 @@
 package fr.aston.snipcave.snipcave.model;
 
+import fr.aston.snipcave.snipcave.utils.VoteType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long voteId;
-    private int vote;
+    private VoteType voteType;
     private String comment;
 
     //Foreign Keys

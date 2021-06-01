@@ -16,19 +16,19 @@ import java.util.UUID;
 public class RefreshTokenService {
     private final IRefreshTokenRepository iRefreshTokenRepository;
 
-    public RefreshToken generateActivationToken(){
+    public RefreshToken generateRefreshToken(){
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setToken(UUID.randomUUID().toString());
-        refreshToken.setCreatedDate(Instant.now());
+        refreshToken.setExpirationDate(Instant.now());
         return iRefreshTokenRepository.save(refreshToken);
     }
 
-    void ValidateActivationToken(String token){
+    void validateRefreshToken(String token){
         iRefreshTokenRepository.findByToken(token)
                 .orElseThrow(() -> new SpringSnipcaveException("Invalid Activation Token"));
     }
 
-    public void deleteActivationToken(String token){
+    public void deleteRefreshToken(String token){
         iRefreshTokenRepository.deleteByToken(token);
     }
 
