@@ -3,10 +3,8 @@ package fr.aston.snipcave.snipcave.service;
 import fr.aston.snipcave.snipcave.dto.AuthenticationResponse;
 import fr.aston.snipcave.snipcave.dto.LoginRequest;
 import fr.aston.snipcave.snipcave.dto.RegisterRequest;
-import fr.aston.snipcave.snipcave.exceptions.SpringSnipcaveException;
 import fr.aston.snipcave.snipcave.model.User;
-import fr.aston.snipcave.snipcave.repository.UserRepository;
-import fr.aston.snipcave.snipcave.security.JwtProvider;
+import fr.aston.snipcave.snipcave.repository.IUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,8 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -29,7 +25,7 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
+    private final IUserRepository IUserRepository;
     //private final VerificationTokenRepository verificationTokenRepository;
     //private final MailService mailService;
 
@@ -45,7 +41,7 @@ public class AuthService {
         user.setCreated(Instant.now());
         user.setEnabled(false);
 
-        userRepository.save(user);
+        IUserRepository.save(user);
 
 
 //        String token = generateVerificationToken(user);
@@ -59,7 +55,7 @@ public class AuthService {
     public User getCurrentUser() {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
                 getContext().getAuthentication().getPrincipal();
-        return userRepository.findByUsername(principal.getUsername())
+        return IUserRepository.findByUsername(principal.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
     }
 

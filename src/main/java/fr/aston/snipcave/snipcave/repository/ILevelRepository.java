@@ -11,13 +11,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LevelRepository extends JpaRepository<Level, Long> {
+public interface ILevelRepository extends JpaRepository<Level, Long> {
     @Override
     long count();
-    @Override
     List<Level> findAll();
-    @Override
-    <S extends Level> S saveAndFlush(S s);
-    @Override
-    <S extends Level> S save(S s);
 }
