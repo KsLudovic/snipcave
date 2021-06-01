@@ -24,6 +24,10 @@ public class SwaggerConfiguration {
                 .apiInfo(getApiInfo());
     }
 
+    /**
+     * Generate Api related informations
+     * @return
+     */
     private ApiInfo getApiInfo() {
         return new ApiInfoBuilder()
                 .title("Snipcave API")

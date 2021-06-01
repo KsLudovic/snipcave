@@ -21,16 +21,24 @@ import javax.servlet.Filter;
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  //  private final UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
    // private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    /**
+     * This implementation is needed since Springboot 2.0 changes
+     * doc source : https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0-Migration-Guide#authenticationmanager-bean
+     */
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-//    @Bean(BeanIds.AUTHENTICATION_MANAGER)
-//    @Override
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
-
+    /**
+     * Generate Swagger API-documentation of the application
+     * @param httpSecurity
+     * @throws Exception
+     */
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and()
@@ -55,16 +63,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          //UsernamePasswordAuthenticationFilter.class);
     }
 
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-//        authenticationManagerBuilder.userDetailsService(userDetailsService)
-//                .passwordEncoder(passwordEncoder());
-//    }
-//
-//    @Bean
-//    PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 
 }
