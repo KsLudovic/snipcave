@@ -1,7 +1,7 @@
 package fr.aston.snipcave.snipcave.service;
 
 import fr.aston.snipcave.snipcave.model.User;
-import fr.aston.snipcave.snipcave.repository.UserRepository;
+import fr.aston.snipcave.snipcave.repository.IUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,12 +19,12 @@ import static java.util.Collections.singletonList;
 @Service
 @AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final IUserRepository IUserRepository;
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
-        Optional<User> userOptional = userRepository.findByUsername(username);
+        Optional<User> userOptional = IUserRepository.findByUsername(username);
         User user = userOptional
                 .orElseThrow(() -> new UsernameNotFoundException("No user " +
                         "Found with username : " + username));
