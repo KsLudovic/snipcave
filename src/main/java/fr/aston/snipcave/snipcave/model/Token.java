@@ -21,7 +21,5 @@ public class Token {
     @GeneratedValue(strategy = IDENTITY)
     private long id;
     private String token;
-    @OneToOne(fetch = LAZY)
-    private User user;
-    private Instant expirationDate;
+    private Instant createdDate;
 }

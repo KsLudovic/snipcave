@@ -2,9 +2,15 @@ package fr.aston.snipcave.snipcave.service;
 
 import fr.aston.snipcave.snipcave.dto.AuthenticationResponse;
 import fr.aston.snipcave.snipcave.dto.LoginRequest;
+import fr.aston.snipcave.snipcave.dto.RefreshTokenRequest;
 import fr.aston.snipcave.snipcave.dto.RegisterRequest;
+import fr.aston.snipcave.snipcave.exceptions.SpringSnipcaveException;
+import fr.aston.snipcave.snipcave.model.RefreshToken;
 import fr.aston.snipcave.snipcave.model.User;
+import fr.aston.snipcave.snipcave.repository.IRefreshTokenRepository;
+import fr.aston.snipcave.snipcave.repository.ITokenRepository;
 import fr.aston.snipcave.snipcave.repository.IUserRepository;
+import fr.aston.snipcave.snipcave.security.JwtProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -25,12 +33,12 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final IUserRepository IUserRepository;
-    //private final VerificationTokenRepository verificationTokenRepository;
+    private final IUserRepository userRepository;
+    private final IRefreshTokenRepository refreshTokenRepository;
     //private final MailService mailService;
 
-   // private final JwtProvider jwtProvider;
-    //private final RefreshTokenService refreshTokenService;
+    private final JwtProvider jwtProvider;
+    private final RefreshTokenService refreshTokenService;
 
 
     public void signup(RegisterRequest registerRequest) {
@@ -41,10 +49,10 @@ public class AuthService {
         user.setCreated(Instant.now());
         user.setEnabled(false);
 
-        IUserRepository.save(user);
+        userRepository.save(user);
 
 
-//        String token = generateVerificationToken(user);
+        String token = generateRefreshToken(user);
 //        mailService.sendMail(new NotificationEmail("Please Activate your Account",
 //                user.getEmail(), "Thank you for signing up to snipcave, " +
 //                "please click on the below url to activate your account : " +
@@ -55,55 +63,55 @@ public class AuthService {
     public User getCurrentUser() {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
                 getContext().getAuthentication().getPrincipal();
-        return IUserRepository.findByUsername(principal.getUsername())
+        return userRepository.findByUsername(principal.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
     }
 
-//    private void fetchUserAndEnable(VerificationToken verificationToken) {
-//        String username = verificationToken.getUser().getUsername();
-//        User user = userRepository.findByUsername(username).orElseThrow(() -> new SpringSnipcaveException("User not found with name - " + username));
-//        user.setEnabled(true);
-//        userRepository.save(user);
-//    }
+        private void fetchUserAndEnable(RefreshToken refreshToken) {
+        String username = refreshToken.getUser().getUsername();
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new SpringSnipcaveException("User not found with name - " + username));
+        user.setEnabled(true);
+        userRepository.save(user);
+    }
 
-//    private String generateVerificationToken(User user) {
-//        String token = UUID.randomUUID().toString();
-//        VerificationToken verificationToken = new VerificationToken();
-//        verificationToken.setToken(token);
-//        verificationToken.setUser(user);
-//
-//        verificationTokenRepository.save(verificationToken);
-//        return token;
-//    }
+    private String generateRefreshToken(User user) {
+        String token = UUID.randomUUID().toString();
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setToken(token);
+        refreshToken.setUser(user);
 
-//    public void verifyAccount(String token) {
-//        Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
-//        fetchUserAndEnable(verificationToken.orElseThrow(() -> new SpringSnipcaveException("Invalid Token")));
-//    }
+        refreshTokenRepository.save(refreshToken);
+        return token;
+    }
+
+    public void verifyAccount(String token) {
+        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByToken(token);
+        fetchUserAndEnable(refreshToken.orElseThrow(() -> new SpringSnipcaveException("Invalid Token")));
+    }
 
     public AuthenticationResponse login(LoginRequest loginRequest) {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
                 loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
-//        String token = jwtProvider.generateToken(authenticate);
+        String token = jwtProvider.generateToken(authenticate);
         return AuthenticationResponse.builder()
-               // .authenticationToken(token)
-               // .refreshToken(refreshTokenService.generateRefreshToken().getToken())
-                //.expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
+                .authenticationToken(token)
+                .refreshToken(refreshTokenService.generateRefreshToken().getToken())
+                .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
                 .username(loginRequest.getUsername())
                 .build();
     }
 
-//    public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
-//        refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
-//        String token = jwtProvider.generateTokenWithUserName(refreshTokenRequest.getUsername());
-//        return AuthenticationResponse.builder()
-//                .authenticationToken(token)
-//                .refreshToken(refreshTokenRequest.getRefreshToken())
-//                .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
-//                .username(refreshTokenRequest.getUsername())
-//                .build();
-//    }
+    public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
+        refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
+        String token = jwtProvider.generateRefreshTokenWithUserName(refreshTokenRequest.getUsername());
+        return AuthenticationResponse.builder()
+                .authenticationToken(token)
+                .refreshToken(refreshTokenRequest.getRefreshToken())
+                .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
+                .username(refreshTokenRequest.getUsername())
+                .build();
+    }
 
     public boolean isLoggedIn() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
