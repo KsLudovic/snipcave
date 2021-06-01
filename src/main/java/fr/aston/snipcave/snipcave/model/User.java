@@ -1,11 +1,11 @@
 package fr.aston.snipcave.snipcave.model;
 
+import fr.aston.snipcave.snipcave.utils.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -31,4 +31,6 @@ public class User {
     private String email;
     private Instant created;
     private boolean enabled;
+    @Enumerated(EnumType.ORDINAL)
+    private Role role;
 }
