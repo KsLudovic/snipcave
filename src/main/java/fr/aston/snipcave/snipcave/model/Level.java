@@ -21,7 +21,5 @@ public class Level {
     private String level="1";
     @Column(name="ExperienceMax")
     private Integer ExperienceMax=100;
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
-    private User user;
+
 }
