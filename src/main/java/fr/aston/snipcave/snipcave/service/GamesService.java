@@ -5,6 +5,7 @@ import fr.aston.snipcave.snipcave.exceptions.SpringSnipcaveException;
 import fr.aston.snipcave.snipcave.model.Games;
 import fr.aston.snipcave.snipcave.model.Post;
 import fr.aston.snipcave.snipcave.repository.IGamesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class GamesService {
 
     private final IGamesRepository gameRepository;
-
+    @Autowired
     public GamesService(IGamesRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
@@ -34,8 +35,8 @@ public class GamesService {
         return gameRepository.findAllByMultiplayer(multiplayer);
     }
 
-    public Games findGameByPost(Post post){
-        return gameRepository.findByPost(post)
+    public Games findGameByPost(Long postId){
+        return gameRepository.findByPost(postId)
                 .orElseThrow(() -> new SpringSnipcaveException("There is no game linked to this post."));
     }
 
