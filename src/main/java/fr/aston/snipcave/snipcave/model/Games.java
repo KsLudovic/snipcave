@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -20,9 +21,9 @@ public class Games {
     private long id;
     @NotBlank
     private String name;
-    @NotBlank
+    @NotNull
     private boolean multiplayer;
-    @NotBlank
+    @NotNull
     private int numberMaxPlayer;
     @OneToOne
     @JoinColumn(name="postId",nullable = false,referencedColumnName = "postId")
