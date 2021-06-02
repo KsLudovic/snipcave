@@ -1,7 +1,7 @@
 package fr.aston.snipcave.snipcave.mapper;
 
-import fr.aston.snipcave.snipcave.dto.PostRequest;
-import fr.aston.snipcave.snipcave.dto.PostResponse;
+import fr.aston.snipcave.snipcave.dto.in.PostRequest;
+import fr.aston.snipcave.snipcave.dto.out.PostResponse;
 import fr.aston.snipcave.snipcave.model.Post;
 import fr.aston.snipcave.snipcave.model.User;
 import fr.aston.snipcave.snipcave.model.Vote;

@@ -1,14 +1,13 @@
 package fr.aston.snipcave.snipcave.service;
 
-import fr.aston.snipcave.snipcave.dto.AuthenticationResponse;
-import fr.aston.snipcave.snipcave.dto.LoginRequest;
-import fr.aston.snipcave.snipcave.dto.RefreshTokenRequest;
-import fr.aston.snipcave.snipcave.dto.RegisterRequest;
+import fr.aston.snipcave.snipcave.dto.out.AuthenticationResponse;
+import fr.aston.snipcave.snipcave.dto.in.LoginRequest;
+import fr.aston.snipcave.snipcave.dto.in.RefreshTokenRequest;
+import fr.aston.snipcave.snipcave.dto.in.RegisterRequest;
 import fr.aston.snipcave.snipcave.exceptions.SpringSnipcaveException;
 import fr.aston.snipcave.snipcave.model.RefreshToken;
 import fr.aston.snipcave.snipcave.model.User;
 import fr.aston.snipcave.snipcave.repository.IRefreshTokenRepository;
-import fr.aston.snipcave.snipcave.repository.ITokenRepository;
 import fr.aston.snipcave.snipcave.repository.IUserRepository;
 import fr.aston.snipcave.snipcave.security.JwtProvider;
 import lombok.AllArgsConstructor;

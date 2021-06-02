@@ -1,7 +1,7 @@
 package fr.aston.snipcave.snipcave.controller;
 
-import fr.aston.snipcave.snipcave.dto.PostRequest;
-import fr.aston.snipcave.snipcave.dto.PostResponse;
+import fr.aston.snipcave.snipcave.dto.in.PostRequest;
+import fr.aston.snipcave.snipcave.dto.out.PostResponse;
 import fr.aston.snipcave.snipcave.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

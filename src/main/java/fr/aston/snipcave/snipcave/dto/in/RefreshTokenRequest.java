@@ -1,4 +1,4 @@
-package fr.aston.snipcave.snipcave.dto;
+package fr.aston.snipcave.snipcave.dto.in;
 
 
 import lombok.AllArgsConstructor;

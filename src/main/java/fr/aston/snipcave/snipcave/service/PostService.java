@@ -1,7 +1,7 @@
 package fr.aston.snipcave.snipcave.service;
 
-import fr.aston.snipcave.snipcave.dto.PostRequest;
-import fr.aston.snipcave.snipcave.dto.PostResponse;
+import fr.aston.snipcave.snipcave.dto.in.PostRequest;
+import fr.aston.snipcave.snipcave.dto.out.PostResponse;
 import fr.aston.snipcave.snipcave.exceptions.PostNotFoundException;
 import fr.aston.snipcave.snipcave.mapper.PostMapper;
 import fr.aston.snipcave.snipcave.model.Post;
@@ -36,7 +36,8 @@ public class PostService {
     }
 
     //public void addPost(PostRequest postRequest){
-    // posRepository.save(postMapper.map(postRequest,authService.getCurrentUser()));}
+    // posRepository.save(postMapper.map(postRequest,authService.getCurrentUser()));
+    // }
 
     //public void putPost(PostRequest postRequest){
     // Post post=postRepository.findByName(postRequest.getPostName())
@@ -68,4 +69,9 @@ public class PostService {
                 .map(postMapper::mapToDto)
                 .collect(toList());
     }
+
+    //public void deletePost(PostRequest postRequest){
+    //   postRepository.deleteById(postRequest.getId());
+    // }
+
 }

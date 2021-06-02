@@ -1,9 +1,9 @@
 package fr.aston.snipcave.snipcave.controller;
 
-import fr.aston.snipcave.snipcave.dto.AuthenticationResponse;
-import fr.aston.snipcave.snipcave.dto.LoginRequest;
-import fr.aston.snipcave.snipcave.dto.RefreshTokenRequest;
-import fr.aston.snipcave.snipcave.dto.RegisterRequest;
+import fr.aston.snipcave.snipcave.dto.out.AuthenticationResponse;
+import fr.aston.snipcave.snipcave.dto.in.LoginRequest;
+import fr.aston.snipcave.snipcave.dto.in.RefreshTokenRequest;
+import fr.aston.snipcave.snipcave.dto.in.RegisterRequest;
 import fr.aston.snipcave.snipcave.service.AuthService;
 import fr.aston.snipcave.snipcave.service.RefreshTokenService;
 import lombok.AllArgsConstructor;
