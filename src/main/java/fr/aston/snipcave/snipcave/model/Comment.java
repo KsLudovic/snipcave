@@ -21,9 +21,9 @@ public class Comment {
     private Long id;
     @NotEmpty
     private String text;
-   // @ManyToOne(fetch = LAZY)
-    //@JoinColumn(name = "postId", referencedColumnName = "postId")
-   // private Post post;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "postId", referencedColumnName = "postId")
+    private Post post;
     private Instant createdDate;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "userId")

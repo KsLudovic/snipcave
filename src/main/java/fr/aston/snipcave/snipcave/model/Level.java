@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
@@ -18,9 +16,12 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Level {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Long userId;
+    private Long id;
     @Column(name="level")
     private String level="1";
     @Column(name="ExperienceMax")
     private Integer ExperienceMax=100;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    private User user;
 }
