@@ -11,4 +11,6 @@ public interface IVoteRepository extends JpaRepository<Vote,Long> {
     Optional<Vote> findByUserAndPost(User user, Post post);
 
     void deleteVoteById(Long id);
+
+    Optional<Vote> findTopByPostAndUserOrderByVoteIdDesc(Post post, User currentUser);
 }
