@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import java.time.Instant;
 
@@ -24,5 +22,8 @@ public class Play {
     Instant gameInProgress;
     private Integer xpWon;
     private Integer nbPlayers;
+    @OneToOne
+    @JoinColumn(name="gamesId", referencedColumnName = "gamesId")
+    private Games game;
 
 }
