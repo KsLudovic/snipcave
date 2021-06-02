@@ -36,5 +36,5 @@ public class User {
     private Role role;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "levelId", referencedColumnName = "levelId")
-    private User user;
+    private Level level;
 }
