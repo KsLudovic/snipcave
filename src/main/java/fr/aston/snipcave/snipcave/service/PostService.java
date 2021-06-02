@@ -51,14 +51,6 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostResponse> getPostsBySubreddit(Long postId) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new PostNotFoundException(postId.toString()));
-        List<Post> posts = postRepository.findAllByPost(post);
-        return posts.stream().map(postMapper::mapToDto).collect(toList());
-    }
-
-    @Transactional(readOnly = true)
     public List<PostResponse> getPostsByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));

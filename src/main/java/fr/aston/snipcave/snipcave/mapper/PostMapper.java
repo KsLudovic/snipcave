@@ -48,11 +48,11 @@ public abstract class PostMapper {
    //     return TimeAgo.using(post.getCreatedDate().toEpochMilli());
     //}
 
-    boolean isPostUpVoted(Post post) {
+    boolean isLiked(Post post) {
         return checkVoteType(post, VoteType.LIKE);
     }
 
-    boolean isPostDownVoted(Post post) {
+    boolean isDisliked(Post post) {
         return checkVoteType(post, VoteType.DISLIKE);
     }
 

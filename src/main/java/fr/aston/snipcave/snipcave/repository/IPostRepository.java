@@ -13,6 +13,4 @@ public interface IPostRepository extends JpaRepository<Post,Long> {
    // void deletePostById(Long id);
 
     Optional<Post> findByName(String name);
-
-    List<Post> findAllByPost(Post post);
 }
