@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface IPostRepository extends JpaRepository<Post,Long> {
     Optional<Post> findByUser(User user);
 
-    void deletePostById(Long id);
+   // void deletePostById(Long id);
 
     Optional<Post> findByName(String name);
 }
