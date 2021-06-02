@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 
 import java.time.Instant;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
@@ -33,4 +34,7 @@ public class User {
     private boolean enabled;
     @Enumerated(EnumType.ORDINAL)
     private Role role;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "levelId", referencedColumnName = "levelId")
+    private User user;
 }
