@@ -35,6 +35,15 @@ public class PostService {
         postRepository.save(postMapper.map(postRequest, authService.getCurrentUser()));
     }
 
+    //public void addPost(PostRequest postRequest){
+    // posRepository.save(postMapper.map(postRequest,authService.getCurrentUser()));}
+
+    //public void putPost(PostRequest postRequest){
+    // Post post=postRepository.findByName(postRequest.getPostName())
+    //                         .orElseThrow(()-> new PostFoundException(postRequest.getPostName()));
+    // PostResponse postResponse = postMapper.mapToDto(post);
+    // postRepository.save(postMapper.map(postResponse,authService.getCurrentUser()));}
+
     @Transactional(readOnly = true)
     public PostResponse getPost(Long id) {
         Post post = postRepository.findById(id)

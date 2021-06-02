@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface IGamesRepository extends JpaRepository<Games, Long> {
 
-   Optional<Games> findByPost(Post post);
+   Optional<Games> findByPost(Long postId);
 
     Optional<Games> findByName(String name);
 
