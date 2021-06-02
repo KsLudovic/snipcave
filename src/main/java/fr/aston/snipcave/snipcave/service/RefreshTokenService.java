@@ -30,7 +30,6 @@ public class RefreshTokenService {
 
     public void deleteRefreshToken(String token){
         iRefreshTokenRepository.deleteByToken(token);
+
     }
-
-
 }

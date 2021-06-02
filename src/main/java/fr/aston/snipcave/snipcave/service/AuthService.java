@@ -78,7 +78,6 @@ public class AuthService {
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setToken(token);
         refreshToken.setUser(user);
-
         refreshTokenRepository.save(refreshToken);
         return token;
     }

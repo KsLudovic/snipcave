@@ -43,6 +43,9 @@ public class PostService {
     // Post post=postRepository.findByName(postRequest.getPostName())
     //                         .orElseThrow(()-> new PostFoundException(postRequest.getPostName()));
     // PostResponse postResponse = postMapper.mapToDto(post);
+    // postResponse.url=postRequest.url;
+    // postResponse.description=postRequest.description;
+    // postResponse.script=postRequest.script;
     // postRepository.save(postMapper.map(postResponse,authService.getCurrentUser()));}
 
     @Transactional(readOnly = true)
