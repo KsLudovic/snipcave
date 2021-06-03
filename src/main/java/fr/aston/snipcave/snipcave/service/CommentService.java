@@ -26,8 +26,7 @@ public class CommentService {
     private final AuthService authService;
     private final CommentMapper commentMapper;
     private final ICommentRepository commentRepository;
-    //private final MailContentBuilder mailContentBuilder;
-    //private final MailService mailService;
+    private final MailService mailService;
 
     public void save(CommentsDto commentsDto) {
         Post post = postRepository.findById(commentsDto.getPostId())

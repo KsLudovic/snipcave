@@ -30,8 +30,6 @@ public class PostService {
     private final PostMapper postMapper;
 
     public void save(PostRequest postRequest) {
-        Post post = postRepository.findByName(postRequest.getPostName())
-                .orElseThrow(() -> new PostNotFoundException(postRequest.getPostName()));
         postRepository.save(postMapper.map(postRequest, authService.getCurrentUser()));
     }
 
