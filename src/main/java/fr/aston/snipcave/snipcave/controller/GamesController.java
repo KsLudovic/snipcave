@@ -5,10 +5,14 @@ import fr.aston.snipcave.snipcave.model.Games;
 import fr.aston.snipcave.snipcave.model.Post;
 import fr.aston.snipcave.snipcave.service.GamesService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static org.springframework.http.ResponseEntity.status;
 
 @RestController
 @RequestMapping("/api/games")
@@ -18,20 +22,20 @@ public class GamesController {
     private final GamesService gamesService;
 
     @GetMapping("/all")
-    public List<Games> getAllGames(){
-        return gamesService.findAllGames();
+    public ResponseEntity<List<GamesDto>> getAllGames(){
+        return status(HttpStatus.OK).body(gamesService.findAllGames());
     }
     @GetMapping("/{name}")
-    public Games getByName(@PathVariable String name){
-        return gamesService.findGameByName(name);
+    public ResponseEntity<GamesDto> getByName(@PathVariable String name){
+        return status(HttpStatus.OK).body(gamesService.findGameByName(name));
     }
     @GetMapping("/{postId}")
-    public Games getByPost(@PathVariable Long postId){
-        return gamesService.findGameByPost(postId);
+    public ResponseEntity<GamesDto> getByPost(@PathVariable Long postId){
+        return status(HttpStatus.OK).body(gamesService.findGameByPost(postId));
     }
     @GetMapping("/multiplayer/{multi}")
-    public List<Games> getAllByMultiplayer(@PathVariable boolean multi){
-        return gamesService.findAllMultiplayerGame(multi);
+    public ResponseEntity<List<GamesDto>> getAllByMultiplayer(@PathVariable boolean multi){
+        return status(HttpStatus.OK).body(gamesService.findAllMultiplayerGame(multi));
     }
 
 //    @PostMapping("/add")

@@ -1,23 +1,25 @@
 package fr.aston.snipcave.snipcave.service;
 
-import fr.aston.snipcave.snipcave.exceptions.PostNotFoundException;
+import fr.aston.snipcave.snipcave.dto.GamesDto;
 import fr.aston.snipcave.snipcave.exceptions.SpringSnipcaveException;
+import fr.aston.snipcave.snipcave.mapper.GameMapper;
 import fr.aston.snipcave.snipcave.model.Games;
-import fr.aston.snipcave.snipcave.model.Post;
 import fr.aston.snipcave.snipcave.repository.IGamesRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
+@AllArgsConstructor
 public class GamesService {
 
+    private final GameMapper gameMapper;
     private final IGamesRepository gameRepository;
-    @Autowired
-    public GamesService(IGamesRepository gameRepository) {
-        this.gameRepository = gameRepository;
-    }
+
 
     public Games addGames(Games game){
         return gameRepository.save(game);
@@ -27,22 +29,30 @@ public class GamesService {
         return gameRepository.save(updatedGame);
     }
 
-    public List<Games> findAllGames(){
-        return gameRepository.findAll();
+    public List<GamesDto> findAllGames(){
+        return gameRepository.findAll()
+                .stream()
+                .map(gameMapper::mapToDto)
+                .collect(toList());
     }
 
-    public List<Games> findAllMultiplayerGame(Boolean multiplayer){
-        return gameRepository.findAllByMultiplayer(multiplayer);
+    public List<GamesDto> findAllMultiplayerGame(Boolean multiplayer){
+        return gameRepository.findAllByMultiplayer(multiplayer)
+                .stream()
+                .map(gameMapper::mapToDto)
+                .collect(toList());
     }
 
-    public Games findGameByPost(Long postId){
-        return gameRepository.findByPost(postId)
+    public GamesDto findGameByPost(Long postId){
+        Games game=gameRepository.findByPost(postId)
                 .orElseThrow(() -> new SpringSnipcaveException("There is no game linked to this post."));
+                return gameMapper.mapToDto(game);
     }
 
-    public Games findGameByName(String name){
-        return gameRepository.findByName(name)
+    public GamesDto findGameByName(String name){
+        Games game=gameRepository.findByName(name)
                 .orElseThrow(() -> new SpringSnipcaveException("There is no game named "+name+"."));
+        return gameMapper.mapToDto(game);
     }
 
     public void deletedGame(Long id){

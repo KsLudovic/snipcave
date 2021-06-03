@@ -12,4 +12,5 @@ public class GamesDto {
     private String name;
     private boolean multiplayer;
     private int numberMaxPlayer;
+    private Long postId;
 }
