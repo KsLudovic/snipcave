@@ -8,6 +8,7 @@ import fr.aston.snipcave.snipcave.repository.IGamesRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class GamesService {
 
     private final GameMapper gameMapper;
@@ -29,26 +31,27 @@ public class GamesService {
         return gameRepository.save(updatedGame);
     }
 
+    @Transactional(readOnly = true)
     public List<GamesDto> findAllGames(){
         return gameRepository.findAll()
                 .stream()
                 .map(gameMapper::mapToDto)
                 .collect(toList());
     }
-
+    @Transactional(readOnly = true)
     public List<GamesDto> findAllMultiplayerGame(Boolean multiplayer){
         return gameRepository.findAllByMultiplayer(multiplayer)
                 .stream()
                 .map(gameMapper::mapToDto)
                 .collect(toList());
     }
-
+    @Transactional(readOnly = true)
     public GamesDto findGameByPost(Long postId){
         Games game=gameRepository.findByPost(postId)
                 .orElseThrow(() -> new SpringSnipcaveException("There is no game linked to this post."));
                 return gameMapper.mapToDto(game);
     }
-
+    @Transactional(readOnly = true)
     public GamesDto findGameByName(String name){
         Games game=gameRepository.findByName(name)
                 .orElseThrow(() -> new SpringSnipcaveException("There is no game named "+name+"."));
