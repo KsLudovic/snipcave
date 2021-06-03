@@ -8,6 +8,7 @@ import fr.aston.snipcave.snipcave.repository.IPlayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,10 @@ public class PlayService {
         this.playRepository = playRepository;
     }
 
+    /**
+     * Method to find all plays existed
+     * @return a list of play (dto)
+     */
     public List<PlayDto> findAll() {
         return playRepository.findAll()
                 .stream()
@@ -31,6 +36,11 @@ public class PlayService {
                 .collect(toList());
     }
 
+    /**
+     * Method to find all play of a game
+     * @param iterable
+     * @return a list of play (dto)
+     */
     public List<PlayDto> findAllByGamesId(Iterable<Long> iterable) {
         return playRepository.findAllByGamesId(iterable)
                 .stream()
@@ -38,8 +48,13 @@ public class PlayService {
                 .collect(toList());
     }
 
-    public List<PlayDto> findAllByDate(Iterable<Long> iterable) {
-        return playRepository.findAllByDate(iterable)
+    /**
+     * Method to find all play played at a specific date
+     * @param date
+     * @return a list of plays(dto)
+     */
+    public List<PlayDto> findAllByDate(Instant date) {
+        return playRepository.findAllByDate(date)
                 .stream()
                 .map(playMapper::mapToDto)
                 .collect(toList());
@@ -60,6 +75,10 @@ public class PlayService {
         return playRepository.saveAndFlush(s);
     }
 
+    /**
+     * Method to delete a play
+     * @param aLong
+     */
     public void deleteById(Long aLong) {
         playRepository.deleteById(aLong);
     }
