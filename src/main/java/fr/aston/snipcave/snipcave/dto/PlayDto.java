@@ -14,4 +14,5 @@ public class PlayDto {
     private Instant createdDate;
     private Integer xpWon;
     private Integer nbPlayers;
+    private String gameName;
 }
