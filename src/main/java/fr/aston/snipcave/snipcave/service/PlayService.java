@@ -64,6 +64,7 @@ public class PlayService {
                 .map(playMapper::mapToDto)
                 .collect(toList());
     }
+
     @Transactional(readOnly = true)
     public List<PlayDto> findAllById(Iterable<Long> iterable) {
         return playRepository.findAllById(iterable)
