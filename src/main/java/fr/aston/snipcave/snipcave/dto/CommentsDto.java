@@ -1,6 +1,8 @@
 package fr.aston.snipcave.snipcave.dto;
 
 
+import fr.aston.snipcave.snipcave.model.Post;
+import fr.aston.snipcave.snipcave.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,8 +14,8 @@ import java.time.Instant;
 @NoArgsConstructor
 public class CommentsDto {
     private Long id;
-    private Long postId;
+    private Post post;
     private Instant createdDate;
     private String text;
-    private String userName;
+    private User user;
 }

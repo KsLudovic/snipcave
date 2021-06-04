@@ -30,9 +30,9 @@ public class CommentService {
 
 
     public void save(CommentsDto commentsDto) {
-        Post post = postRepository.findById(commentsDto.getPostId())
-                .orElseThrow(() -> new PostNotFoundException(commentsDto.getPostId().toString()));
-        Comment comment = commentMapper.map(commentsDto, post, authService.getCurrentUser());
+        Post post = postRepository.findById(commentsDto.getPost().getPostId())
+                .orElseThrow(() -> new PostNotFoundException(commentsDto.getPost().getPostId().toString()));
+        Comment comment = this.map(commentsDto);
         commentRepository.save(comment);
 
         //String message = mailContentBuilder.build(authService.getCurrentUser() + " posted a comment on your post." + POST_URL);
@@ -47,7 +47,7 @@ public class CommentService {
         Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(postId.toString()));
         return commentRepository.findByPost(post)
                 .stream()
-                .map(commentMapper::mapToDto).collect(toList());
+                .map(this::mapToDto).collect(toList());
     }
 
     public List<CommentsDto> getAllCommentsForUser(String userName) {
@@ -55,7 +55,25 @@ public class CommentService {
                 .orElseThrow(() -> new UsernameNotFoundException(userName));
         return commentRepository.findAllByUser(user)
                 .stream()
-                .map(commentMapper::mapToDto)
+                .map(this::mapToDto)
                 .collect(toList());
     }
+
+    public Comment map(CommentsDto commentsDto){
+        return new Comment(commentsDto.getId(),
+                commentsDto.getText(),
+                commentsDto.getPost(),
+                commentsDto.getCreatedDate(),
+                commentsDto.getUser());
+    }
+
+    public CommentsDto mapToDto(Comment comment){
+        return new CommentsDto(comment.getId(),
+                comment.getPost(),
+                comment.getCreatedDate(),
+                comment.getText(),
+                comment.getUser());
+
+    }
+
 }
