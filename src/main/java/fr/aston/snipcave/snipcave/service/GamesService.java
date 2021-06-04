@@ -33,30 +33,46 @@ public class GamesService {
     public List<GamesDto> findAllGames(){
         return gameRepository.findAll()
                 .stream()
-                .map(gameMapper::mapToDto)
+                .map(this::mapToDto)
                 .collect(toList());
     }
     @Transactional(readOnly = true)
     public List<GamesDto> findAllMultiplayerGame(Boolean multiplayer){
         return gameRepository.findAllByMultiplayer(multiplayer)
                 .stream()
-                .map(gameMapper::mapToDto)
+                .map(this::mapToDto)
                 .collect(toList());
     }
     @Transactional(readOnly = true)
     public GamesDto findGameByPost(Long postId){
         Games game=gameRepository.findByPost(postId)
                 .orElseThrow(() -> new SpringSnipcaveException("There is no game linked to this post."));
-                return gameMapper.mapToDto(game);
+                return this.mapToDto(game);
     }
     @Transactional(readOnly = true)
     public GamesDto findGameByName(String name){
         Games game=gameRepository.findByName(name)
                 .orElseThrow(() -> new SpringSnipcaveException("There is no game named "+name+"."));
-        return gameMapper.mapToDto(game);
+        return this.mapToDto(game);
     }
 
     public void deletedGame(Long id){
         gameRepository.deleteById(id);
+    }
+
+    public Games map(GamesDto gamesDto){
+        return new Games(gamesDto.getId(),
+                gamesDto.getName(),
+                gamesDto.isMultiplayer(),
+                gamesDto.getNumberMaxPlayer(),
+                gamesDto.getPost());
+    }
+
+    public  GamesDto mapToDto(Games game){
+        return new GamesDto(game.getGamesId(),
+                game.getName(),
+                game.isMultiplayer(),
+                game.getNumberMaxPlayer(),
+                game.getPost());
     }
 }
