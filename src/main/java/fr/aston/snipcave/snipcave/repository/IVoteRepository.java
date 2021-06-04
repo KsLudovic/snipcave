@@ -5,6 +5,7 @@ import fr.aston.snipcave.snipcave.model.User;
 import fr.aston.snipcave.snipcave.model.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Collection;
 import java.util.Optional;
 
 public interface IVoteRepository extends JpaRepository<Vote,Long> {
@@ -13,4 +14,7 @@ public interface IVoteRepository extends JpaRepository<Vote,Long> {
     void deleteVoteById(Long id);
 
     Optional<Vote> findTopByPostAndUserOrderByVoteIdDesc(Post post, User currentUser);
+
+
+    Collection<Vote> findByPost(Post post);
 }
