@@ -26,41 +26,30 @@ public class PlayService {
         this.playRepository = playRepository;
     }
 
-    /**
-     * Method to find all plays existed
-     * @return a list of play (dto)
-     */
+
     @Transactional(readOnly = true)
     public List<PlayDto> findAll() {
         return playRepository.findAll()
                 .stream()
-                .map(playMapper::mapToDto)
+                .map(this::mapToDto)
                 .collect(toList());
     }
 
-    /**
-     * Method to find all play of a game
-     * @param iterable
-     * @return a list of play (dto)
-     */
+
     @Transactional(readOnly = true)
     public List<PlayDto> findAllByGamesId(Iterable<Long> iterable) {
         return playRepository.findAllByGamesId(iterable)
                 .stream()
-                .map(playMapper::mapToDto)
+                .map(this::mapToDto)
                 .collect(toList());
     }
 
-    /**
-     * Method to find all play played at a specific date
-     * @param date
-     * @return a list of plays(dto)
-     */
+
     @Transactional(readOnly = true)
     public List<PlayDto> findAllByDate(Instant date) {
         return playRepository.findAllByDate(date)
                 .stream()
-                .map(playMapper::mapToDto)
+                .map(this::mapToDto)
                 .collect(toList());
     }
 
@@ -68,7 +57,7 @@ public class PlayService {
     public List<PlayDto> findAllById(Iterable<Long> iterable) {
         return playRepository.findAllById(iterable)
                 .stream()
-                .map(playMapper::mapToDto)
+                .map(this::mapToDto)
                 .collect(toList());
     }
 
