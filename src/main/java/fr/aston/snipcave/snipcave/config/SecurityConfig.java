@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-   // private final JwtAuthenticationFilter jwtAuthenticationFilter;
+   private final JwtAuthenticationFilter jwtAuthenticationFilter;
     /**
      * This implementation is needed since Springboot 2.0 changes
      * doc source : https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0-Migration-Guide#authenticationmanager-bean
@@ -59,8 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest()
                .authenticated();
-        //httpSecurity.addFilterBefore( jwtAuthenticationFilter, // Cast filter maybe bad idea
-         //UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore( jwtAuthenticationFilter, // Cast filter maybe bad idea
+                UsernamePasswordAuthenticationFilter.class);
     }
 
     @Autowired

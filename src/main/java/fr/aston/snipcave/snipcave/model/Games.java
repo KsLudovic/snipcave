@@ -15,10 +15,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @Entity
 public class Games {
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private long id;
+    private long gamesId;
     @NotBlank
     private String name;
     @NotNull

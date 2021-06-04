@@ -6,6 +6,9 @@ import fr.aston.snipcave.snipcave.model.Post;
 import fr.aston.snipcave.snipcave.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
+
+
 
 @Mapper(componentModel = "spring")
 public interface CommentMapper {

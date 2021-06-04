@@ -16,7 +16,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Level {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+    private Long levelId;
     @Column(name="level")
     private String level="1";
     @Column(name="ExperienceMax")

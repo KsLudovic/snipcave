@@ -10,6 +10,7 @@ import fr.aston.snipcave.snipcave.repository.ICommentRepository;
 import fr.aston.snipcave.snipcave.repository.IPostRepository;
 import fr.aston.snipcave.snipcave.repository.IUserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +21,15 @@ import static java.util.stream.Collectors.toList;
 @Service
 @AllArgsConstructor
 public class CommentService {
-    private static final String POST_URL = "";
+    //private static final String POST_URL = "";
     private final IPostRepository postRepository;
     private final IUserRepository userRepository;
     private final AuthService authService;
     private final CommentMapper commentMapper;
     private final ICommentRepository commentRepository;
-    private final MailService mailService;
+    //private final MailService mailService;
+
+
 
     public void save(CommentsDto commentsDto) {
         Post post = postRepository.findById(commentsDto.getPostId())

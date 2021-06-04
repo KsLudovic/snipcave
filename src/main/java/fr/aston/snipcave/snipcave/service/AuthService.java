@@ -5,6 +5,7 @@ import fr.aston.snipcave.snipcave.dto.in.LoginRequest;
 import fr.aston.snipcave.snipcave.dto.in.RefreshTokenRequest;
 import fr.aston.snipcave.snipcave.dto.in.RegisterRequest;
 import fr.aston.snipcave.snipcave.exceptions.SpringSnipcaveException;
+import fr.aston.snipcave.snipcave.model.NotificationEmail;
 import fr.aston.snipcave.snipcave.model.RefreshToken;
 import fr.aston.snipcave.snipcave.model.User;
 import fr.aston.snipcave.snipcave.repository.IRefreshTokenRepository;
@@ -34,7 +35,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final IUserRepository userRepository;
     private final IRefreshTokenRepository refreshTokenRepository;
-    //private final MailService mailService;
+    private final MailService mailService;
 
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
@@ -52,10 +53,11 @@ public class AuthService {
 
 
         String token = generateRefreshToken(user);
-//        mailService.sendMail(new NotificationEmail("Please Activate your Account",
-//                user.getEmail(), "Thank you for signing up to snipcave, " +
-//                "please click on the below url to activate your account : " +
-//                "http://localhost:8080/api/auth/accountVerification/" + token));
+        mailService.sendEmail(new NotificationEmail(user.getEmail(),
+                "Please Activate your Account",
+                "Thank you for signing up to snipcave, " +
+                "please click on the below url to activate your account : " +
+                "http://localhost:8080/api/auth/accountVerification/" + token));
     }
 
     @Transactional(readOnly = true)

@@ -18,11 +18,11 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Play {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+    private Long playId;
     Instant gameInProgress;
     private Integer xpWon;
     private Integer nbPlayers;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="gamesId", referencedColumnName = "gamesId")
     private Games game;
 
