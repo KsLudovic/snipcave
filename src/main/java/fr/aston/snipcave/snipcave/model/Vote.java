@@ -22,9 +22,9 @@ public class Vote {
     //Foreign Keys
     @ManyToOne
     @JoinColumn(name = "postId",referencedColumnName = "postId")
-    private Post postId;
+    private Post post;
     @ManyToOne
     @JoinColumn(name="userId",referencedColumnName = "userId")
-    private User userId;
+    private User user;
 
 }

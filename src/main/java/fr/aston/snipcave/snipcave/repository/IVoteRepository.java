@@ -11,10 +11,9 @@ import java.util.Optional;
 public interface IVoteRepository extends JpaRepository<Vote,Long> {
     Optional<Vote> findByUserAndPost(User user, Post post);
 
-    void deleteVoteById(Long id);
+    void deleteVoteByVoteId(Long id);
 
     Optional<Vote> findTopByPostAndUserOrderByVoteIdDesc(Post post, User currentUser);
-
 
     Collection<Vote> findByPost(Post post);
 }

@@ -2,30 +2,31 @@ package fr.aston.snipcave.snipcave.service;
 
 import fr.aston.snipcave.snipcave.dto.PlayDto;
 
+import fr.aston.snipcave.snipcave.exceptions.SpringSnipcaveException;
+import fr.aston.snipcave.snipcave.model.Games;
 import fr.aston.snipcave.snipcave.model.Play;
 import fr.aston.snipcave.snipcave.repository.ICommentRepository;
+import fr.aston.snipcave.snipcave.repository.IGamesRepository;
 import fr.aston.snipcave.snipcave.repository.IPlayRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class PlayService {
+
     private final IPlayRepository playRepository;
-
-
-    @Autowired
-    public PlayService(IPlayRepository playRepository) {
-        this.playRepository = playRepository;
-    }
-
+    private final IGamesRepository gamesRepository;
 
     @Transactional(readOnly = true)
     public List<PlayDto> findAll() {
@@ -37,8 +38,10 @@ public class PlayService {
 
 
     @Transactional(readOnly = true)
-    public List<PlayDto> findAllByGamesId(Iterable<Long> iterable) {
-        return playRepository.findAllByGamesId(iterable)
+    public List<PlayDto> findByGamesId(Long id) {
+        Games game= gamesRepository.findById(id)
+                .orElseThrow(() -> new SpringSnipcaveException("No game found."));
+        return playRepository.findByGame(game)
                 .stream()
                 .map(this::mapToDto)
                 .collect(toList());
@@ -46,8 +49,8 @@ public class PlayService {
 
 
     @Transactional(readOnly = true)
-    public List<PlayDto> findAllByDate(Instant date) {
-        return playRepository.findAllByDate(date)
+    public List<PlayDto> findAllByGameInProgress(Instant date) {
+        return playRepository.findAllByGameInProgress(date)
                 .stream()
                 .map(this::mapToDto)
                 .collect(toList());

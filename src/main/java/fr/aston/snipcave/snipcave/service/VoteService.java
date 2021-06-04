@@ -38,7 +38,7 @@ public class VoteService {
     }
 
     public void deleteVote(Long id){
-    voteRepository.deleteVoteById(id);
+    voteRepository.deleteVoteByVoteId(id);
     }
 
 }

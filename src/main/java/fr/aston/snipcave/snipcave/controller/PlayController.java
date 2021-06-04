@@ -3,6 +3,7 @@ package fr.aston.snipcave.snipcave.controller;
 import fr.aston.snipcave.snipcave.dto.PlayDto;
 import fr.aston.snipcave.snipcave.service.PlayService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,8 @@ import static org.springframework.http.ResponseEntity.status;
 @AllArgsConstructor
 public class PlayController {
 
-    private final PlayService playService;
+    @Autowired
+    private PlayService playService;
 
     @GetMapping("/all")
     public ResponseEntity<List<PlayDto>> getAll(){
@@ -29,10 +31,10 @@ public class PlayController {
     }
     @GetMapping("/all/{date}")
     public ResponseEntity<List<PlayDto>> getAll(@PathVariable Instant date){
-        return status(HttpStatus.OK).body(playService.findAllByDate(date));
+        return status(HttpStatus.OK).body(playService.findAllByGameInProgress(date));
     }
     @GetMapping("/all/{gameId}")
     public ResponseEntity<List<PlayDto>> getAll(@PathVariable Long gameId){
-        return status(HttpStatus.OK).body(playService.findAllByGamesId(Collections.singleton(gameId)));
+        return status(HttpStatus.OK).body(playService.findByGamesId(gameId));
     }
 }

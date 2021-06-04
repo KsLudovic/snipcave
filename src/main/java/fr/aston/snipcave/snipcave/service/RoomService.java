@@ -1,5 +1,7 @@
 package fr.aston.snipcave.snipcave.service;
 
+import fr.aston.snipcave.snipcave.exceptions.SpringSnipcaveException;
+import fr.aston.snipcave.snipcave.model.Play;
 import fr.aston.snipcave.snipcave.model.Room;
 import fr.aston.snipcave.snipcave.repository.IPlayRepository;
 import fr.aston.snipcave.snipcave.repository.IRoomRepository;
@@ -12,11 +14,13 @@ import java.util.List;
 @Service
 public class RoomService {
     private final IRoomRepository roomRepository;
+    private final IPlayRepository playRepository;
 
 
     @Autowired
-    public RoomService(IRoomRepository roomRepository) {
+    public RoomService(IRoomRepository roomRepository, IPlayRepository playRepository) {
         this.roomRepository = roomRepository;
+        this.playRepository = playRepository;
     }
 
     public List<Room> findAll() {
@@ -27,8 +31,10 @@ public class RoomService {
         return roomRepository.findAllById(iterable);
     }
 
-    public List<Room> findAllByPlayId(Iterable<Long> iterable) {
-        return roomRepository.findAllByPlayId(iterable);
+    public List<Room> findByPlayId(Long id) {
+        Play play = playRepository.findById(id)
+                .orElseThrow(() -> new SpringSnipcaveException("No play found."));
+        return roomRepository.findByPlay(play);
     }
 
     public long count() {
