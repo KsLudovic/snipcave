@@ -11,11 +11,13 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
+
 @RestController
-@RequestMapping("/api/comments/")
+@RequestMapping("/api/comments")
 @AllArgsConstructor
 public class CommentsController {
-    private final CommentService commentService;
+
+    private CommentService commentService;
 
     @GetMapping("/by-post/{postId}")
     public ResponseEntity<List<CommentsDto>> getAllCommentsForPost(@PathVariable Long postId) {
@@ -23,10 +25,11 @@ public class CommentsController {
                 .body(commentService.getAllCommentsForPost(postId));
     }
 
-    @GetMapping("/by-user/{userName}")
-    public ResponseEntity<List<CommentsDto>> getAllCommentsForUser(@PathVariable String userName){
+    @GetMapping("/by-user/{username}")
+    public ResponseEntity<List<CommentsDto>> getCommentsByUser(@PathVariable String username){
+        System.out.println(username);
         return ResponseEntity.status(OK)
-                .body(commentService.getAllCommentsForUser(userName));
+                .body(commentService.getCommentsByUser(username));
     }
 
 }

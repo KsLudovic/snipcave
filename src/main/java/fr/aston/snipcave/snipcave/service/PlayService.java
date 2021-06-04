@@ -36,7 +36,6 @@ public class PlayService {
                 .collect(toList());
     }
 
-
     @Transactional(readOnly = true)
     public List<PlayDto> findByGamesId(Long id) {
         Games game= gamesRepository.findById(id)
@@ -46,7 +45,6 @@ public class PlayService {
                 .map(this::mapToDto)
                 .collect(toList());
     }
-
 
     @Transactional(readOnly = true)
     public List<PlayDto> findAllByGameInProgress(Instant date) {
@@ -72,7 +70,6 @@ public class PlayService {
         return playRepository.saveAndFlush(s);
     }
 
-
     public void deleteById(Long aLong) {
         playRepository.deleteById(aLong);
     }
@@ -84,6 +81,7 @@ public class PlayService {
                 playDto.getNbPlayers(),
                 playDto.getGame());
     }
+
     public PlayDto mapToDto (Play play){
         return new PlayDto(play.getPlayId(),
                 play.getGameInProgress(),

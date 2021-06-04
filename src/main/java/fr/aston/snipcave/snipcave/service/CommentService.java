@@ -28,7 +28,6 @@ public class CommentService {
     //private final MailService mailService;
 
 
-
     public void save(CommentsDto commentsDto) {
         Post post = postRepository.findById(commentsDto.getPost().getPostId())
                 .orElseThrow(() -> new PostNotFoundException(commentsDto.getPost().getPostId().toString()));
@@ -50,9 +49,9 @@ public class CommentService {
                 .map(this::mapToDto).collect(toList());
     }
 
-    public List<CommentsDto> getAllCommentsForUser(String userName) {
-        User user = userRepository.findByUsername(userName)
-                .orElseThrow(() -> new UsernameNotFoundException(userName));
+    public List<CommentsDto> getAllCommentsForUser(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
         return commentRepository.findAllByUser(user)
                 .stream()
                 .map(this::mapToDto)
@@ -76,4 +75,12 @@ public class CommentService {
 
     }
 
+    public List<CommentsDto> getCommentsByUser(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
+        return commentRepository.findAllByUser(user)
+                .stream()
+                .map(this::mapToDto)
+                .collect(toList());
+    }
 }
