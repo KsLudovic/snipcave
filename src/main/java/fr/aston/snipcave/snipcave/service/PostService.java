@@ -3,7 +3,6 @@ package fr.aston.snipcave.snipcave.service;
 import fr.aston.snipcave.snipcave.dto.in.PostRequest;
 import fr.aston.snipcave.snipcave.dto.out.PostResponse;
 import fr.aston.snipcave.snipcave.exceptions.PostNotFoundException;
-import fr.aston.snipcave.snipcave.mapper.PostMapper;
 import fr.aston.snipcave.snipcave.model.Post;
 import fr.aston.snipcave.snipcave.model.User;
 import fr.aston.snipcave.snipcave.repository.IPostRepository;
@@ -27,7 +26,6 @@ public class PostService {
     private final IPostRepository postRepository;
     private final IUserRepository userRepository;
     private final AuthService authService;
-    private final PostMapper postMapper;
 
     public void save(PostRequest postRequest) {
         postRepository.save(postMapper.map(postRequest, authService.getCurrentUser()));

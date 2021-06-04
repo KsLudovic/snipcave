@@ -2,7 +2,6 @@ package fr.aston.snipcave.snipcave.service;
 
 import fr.aston.snipcave.snipcave.dto.CommentsDto;
 import fr.aston.snipcave.snipcave.exceptions.PostNotFoundException;
-import fr.aston.snipcave.snipcave.mapper.CommentMapper;
 import fr.aston.snipcave.snipcave.model.Comment;
 import fr.aston.snipcave.snipcave.model.Post;
 import fr.aston.snipcave.snipcave.model.User;
@@ -25,7 +24,6 @@ public class CommentService {
     private final IPostRepository postRepository;
     private final IUserRepository userRepository;
     private final AuthService authService;
-    private final CommentMapper commentMapper;
     private final ICommentRepository commentRepository;
     //private final MailService mailService;
 

@@ -1,7 +1,7 @@
 package fr.aston.snipcave.snipcave.service;
 
 import fr.aston.snipcave.snipcave.dto.PlayDto;
-import fr.aston.snipcave.snipcave.mapper.PlayMapper;
+
 import fr.aston.snipcave.snipcave.model.Play;
 import fr.aston.snipcave.snipcave.repository.ICommentRepository;
 import fr.aston.snipcave.snipcave.repository.IPlayRepository;
@@ -19,7 +19,6 @@ import static java.util.stream.Collectors.toList;
 @Transactional
 public class PlayService {
     private final IPlayRepository playRepository;
-    private  PlayMapper playMapper;
 
 
     @Autowired

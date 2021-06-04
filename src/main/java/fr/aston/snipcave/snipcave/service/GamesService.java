@@ -2,7 +2,6 @@ package fr.aston.snipcave.snipcave.service;
 
 import fr.aston.snipcave.snipcave.dto.GamesDto;
 import fr.aston.snipcave.snipcave.exceptions.SpringSnipcaveException;
-import fr.aston.snipcave.snipcave.mapper.GameMapper;
 import fr.aston.snipcave.snipcave.model.Games;
 import fr.aston.snipcave.snipcave.repository.IGamesRepository;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,6 @@ import static java.util.stream.Collectors.toList;
 @Transactional
 public class GamesService {
 
-    private final GameMapper gameMapper;
     private final IGamesRepository gameRepository;
 
 
