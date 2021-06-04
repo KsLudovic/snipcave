@@ -1,5 +1,6 @@
 package fr.aston.snipcave.snipcave.dto;
 
+import fr.aston.snipcave.snipcave.model.Games;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,5 @@ public class PlayDto {
     private Instant createdDate;
     private Integer xpWon;
     private Integer nbPlayers;
-    private String gameName;
+    private Games game;
 }

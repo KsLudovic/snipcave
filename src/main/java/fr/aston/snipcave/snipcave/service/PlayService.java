@@ -80,11 +80,23 @@ public class PlayService {
         return playRepository.saveAndFlush(s);
     }
 
-    /**
-     * Method to delete a play
-     * @param aLong
-     */
+
     public void deleteById(Long aLong) {
         playRepository.deleteById(aLong);
+    }
+
+    public Play map(PlayDto playDto){
+        return new Play(playDto.getId(),
+                playDto.getCreatedDate(),
+                playDto.getXpWon(),
+                playDto.getNbPlayers(),
+                playDto.getGame());
+    }
+    public PlayDto mapToDto (Play play){
+        return new PlayDto(play.getPlayId(),
+                play.getGameInProgress(),
+                play.getXpWon(),
+                play.getNbPlayers(),
+                play.getGame());
     }
 }
