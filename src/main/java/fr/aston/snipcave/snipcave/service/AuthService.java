@@ -5,9 +5,11 @@ import fr.aston.snipcave.snipcave.dto.in.LoginRequest;
 import fr.aston.snipcave.snipcave.dto.in.RefreshTokenRequest;
 import fr.aston.snipcave.snipcave.dto.in.RegisterRequest;
 import fr.aston.snipcave.snipcave.exceptions.SpringSnipcaveException;
+import fr.aston.snipcave.snipcave.model.Level;
 import fr.aston.snipcave.snipcave.model.NotificationEmail;
 import fr.aston.snipcave.snipcave.model.RefreshToken;
 import fr.aston.snipcave.snipcave.model.User;
+import fr.aston.snipcave.snipcave.repository.ILevelRepository;
 import fr.aston.snipcave.snipcave.repository.IRefreshTokenRepository;
 import fr.aston.snipcave.snipcave.repository.IUserRepository;
 import fr.aston.snipcave.snipcave.security.JwtProvider;
@@ -31,14 +33,18 @@ import java.util.UUID;
 @Transactional
 public class AuthService {
 
+
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final IUserRepository userRepository;
+    private final ILevelRepository levelRepository;
     private final IRefreshTokenRepository refreshTokenRepository;
     private final MailService mailService;
 
+
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
+
 
 
     public void signup(RegisterRequest registerRequest) {
@@ -48,7 +54,7 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setCreated(Instant.now());
         user.setEnabled(false);
-
+        user.setLevel(levelRepository.getById(1L));
         userRepository.save(user);
 
 
@@ -56,6 +62,8 @@ public class AuthService {
         mailService.sendEmail(new NotificationEmail(user.getEmail(),
                 "Please Activate your Account",
                 "Thank you for signing up to snipcave, " +
+                        "Your username and your password "+
+                        user.getUsername()+" "+ user.getPassword()+
                 "please click on the below url to activate your account : " +
                 "http://localhost:8080/api/auth/accountVerification/" + token));
     }
@@ -117,6 +125,7 @@ public class AuthService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
+
 
 
 

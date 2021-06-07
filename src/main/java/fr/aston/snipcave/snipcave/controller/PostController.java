@@ -13,19 +13,19 @@ import java.util.List;
 import static org.springframework.http.ResponseEntity.status;
 
 @RestController
-@RequestMapping("/api/posts/")
+@RequestMapping("/api/posts")
 @AllArgsConstructor
 public class PostController {
 
     private final PostService postService;
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Void> createPost(@RequestBody PostRequest postRequest) {
         postService.save(postRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/allpost")
     public ResponseEntity<List<PostResponse>> getAllPosts() {
         return status(HttpStatus.OK).body(postService.getAllPosts());
     }

@@ -37,12 +37,13 @@ public class PostService {
     private IVoteRepository voteRepository;
     @Autowired
     private ICommentRepository commentRepository;
+
     public void save(PostRequest postRequest) {
         postRepository.save(this.map(postRequest));
     }
 
     //public void addPost(PostRequest postRequest){
-    // posRepository.save(postMapper.map(postRequest,authService.getCurrentUser()));
+    // postRepository.save(this.map(postRequest,authService.getCurrentUser()));
     // }
 
     //public void putPost(PostRequest postRequest){

@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LevelDto {
     private Long id;
-    private Long userId;
     private String level;
     private Integer ExperienceMax;
 }
