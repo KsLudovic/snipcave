@@ -32,4 +32,9 @@ public class CommentsController {
                 .body(commentService.getCommentsByUser(username));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<CommentsDto>> getAllComments(){
+        return ResponseEntity.status(OK).body(commentService.findAll());
+    }
+
 }

@@ -82,5 +82,12 @@ public class CommentService {
                 .stream()
                 .map(this::mapToDto)
                 .collect(toList());
+}
+
+    public List<CommentsDto> findAll() {
+        return commentRepository.findAll()
+                .stream()
+                .map(this::mapToDto)
+                .collect(toList());
     }
 }
