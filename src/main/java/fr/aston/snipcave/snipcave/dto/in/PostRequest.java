@@ -17,6 +17,6 @@ public class PostRequest {
     private String description;
     private String script;
     private Instant instant;
-    private User user;
+    private Long userId;
 
 }

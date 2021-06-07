@@ -39,7 +39,8 @@ public class PostService {
     private ICommentRepository commentRepository;
 
     public void save(PostRequest postRequest) {
-        postRepository.save(this.map(postRequest));
+        User user = userRepository.getById(postRequest.getUserId());
+        postRepository.save(this.map(postRequest,user));
     }
 
     //public void addPost(PostRequest postRequest){
@@ -84,11 +85,11 @@ public class PostService {
     //   postRepository.deleteById(postRequest.getId());
     // }
 
-    public Post map(PostRequest postRequest){
+    public Post map(PostRequest postRequest, User user){
         return new Post(postRequest.getPostId(),
                 postRequest.getDescription(),
                 postRequest.getUrl(),postRequest.getPostName(),
-                postRequest.getInstant(),postRequest.getScript(),0,postRequest.getUser());
+                postRequest.getInstant(),postRequest.getScript(),0,user);
     }
 
     public PostResponse mapToDto(Post post){
